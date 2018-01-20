@@ -11,22 +11,7 @@ currentImage.src="http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jp
  else
    processImage(currentImage);
  }
-//
-// function isBird(image){
-//   //some code to figure out if image is a bird, using google cloud
-//   //if it isnt a bird
-//   return false;
-//   //otherwise return true
-//   return true;
-// }
-//
-// //returns true if the image name has bird
-// function nameContainsBird(image){
-//  console.log(image.src);
-//  return image.src.indexOf("bird")>-1;
-// }
 
-console.log("hey")
 function processImage(img) {
 
   var data = {
@@ -62,7 +47,7 @@ function processImage(img) {
       if (birdFeatures.indexOf(currentLabel.description)>-1 && currentLabel.score>.60) {
         // handle image replacement
         // img.src = 'http://via.placeholder.com/350x150';
-        img.src = 'http://via.placeholder.com/' + img.width + 'x' + img.height;
+        img.src = 'http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg' ;
         isBird=true;
         break;
       }
