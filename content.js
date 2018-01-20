@@ -3,7 +3,7 @@ var images = document.getElementsByTagName('img');
 for (var image in images) {
 
   if (nameContainsBird(image) || isBird(image))
-    image.src = 'https://en.wiktionary.org/wiki/cat#/media/File:Cat03.jpg' + image.width + '/' + image.height;
+    image.src = 'https://en.wiktionary.org/wiki/cat#/media/File:Cat03.jpg';
 }
 
 
