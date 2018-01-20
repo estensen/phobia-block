@@ -1,6 +1,7 @@
 var images = document.getElementsByTagName('img');
+
 for (var x = 0, x<images.length; x++) {
-  currentImage=images[x]
+  currentImage=images[x];
   if (isBird(currentImage))
     images[x].src = 'some wholesome image url' + images[x].width + '/' + images[x].height;
 }
@@ -8,4 +9,8 @@ for (var x = 0, x<images.length; x++) {
 
 function isBird(image){
   //some code to figure out if image is a bird, using google cloud
+  //if it isnt a bird
+  return false;
+  //otherwise return true
+  return true;
 }
