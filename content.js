@@ -1,11 +1,10 @@
-var images = document.getElementsByTagName('img');
+var images = this.document.getElementsByTagName('img');
 
-for (var image in images) {
-
-  if (nameContainsBird(image) || isBird(image))
-    image.src = 'https://en.wiktionary.org/wiki/cat#/media/File:Cat03.jpg';
+for (var x=0; x<images.length;x++) {
+  currentImage=images[x]
+  if (nameContainsBird(currentImage) || isBird(currentImage))
+    currentImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/800px-Cat03.jpg';
 }
-
 
 function isBird(image){
   //some code to figure out if image is a bird, using google cloud
@@ -17,5 +16,6 @@ function isBird(image){
 
 //returns true if the image name has bird
 function nameContainsBird(image){
- return image.src.indexOf("bird").ignoreCase()>-1
+ console.log(image.src);
+ return image.src.indexOf("bird")>-1;
 }

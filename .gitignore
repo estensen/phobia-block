@@ -54,3 +54,7 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/git,macos,windows
+
+# Don't track environmental files
+.env
+Second-cc63798bde7f.json
