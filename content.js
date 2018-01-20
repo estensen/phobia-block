@@ -1,9 +1,9 @@
 var images = document.getElementsByTagName('img');
 
-for (var x = 0, x<images.length; x++) {
-  currentImage=images[x];
-  if (isBird(currentImage))
-    images[x].src = 'some wholesome image url' + images[x].width + '/' + images[x].height;
+for (var image in images) {
+
+  if (nameContainsBird(image) || isBird(image))
+    image.src = 'https://en.wiktionary.org/wiki/cat#/media/File:Cat03.jpg' + image.width + '/' + image.height;
 }
 
 
@@ -13,4 +13,9 @@ function isBird(image){
   return false;
   //otherwise return true
   return true;
+}
+
+//returns true if the image name has bird
+function nameContainsBird(image){
+ return image.src.indexOf("bird").ignoreCase()>-1
 }
