@@ -34,17 +34,27 @@ const birdFeatures = [
 
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
-  while (image = images[i++]) {
-    let imgSrc = String(image.src).toLowerCase();
-    let altText = String(image.alt).toLowerCase();
+  while (img = images[i++]) {
+    let imgSrc = String(img.src).toLowerCase();
+    let altText = String(img.alt).toLowerCase();
 
     if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
-      replaceBirdWithFiltered(image)
+      replaceBirdWithFiltered(img)
     } else {
       // Hide image while processing
-      image.style.visibility = 'hidden';
-      processImage(image);
+      img.style.visibility = 'hidden';
+      processImage(img);
     }
+    // knock out lazyloader data URLs so it doesn't overwrite filtered pics
+		if (img.hasAttribute('data-src')){
+			img.removeAttribute('data-src');
+		};
+		if (img.hasAttribute('data-hi-res-src')){
+			img.removeAttribute('data-hi-res-src');
+		};
+		if (img.hasAttribute('data-low-res-src')){
+			img.removeAttribute('data-low-res-src');
+		};
   }
 }
 
