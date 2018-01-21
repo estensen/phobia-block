@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', checkImages(), false);
 const birdFeatures=['beak', 'finch', 'wing', 'bird', 'lark', 'seabird','waterbird', 'water bird'];
-const url = 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAGP_QBmE-Brt-uItNnFj2T_9QRvDRKU40';
+const url = 'https://vision.googleapis.com/v1/images:annotate?key=';
 
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
