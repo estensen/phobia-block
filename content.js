@@ -5,12 +5,23 @@ const url = 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAGP_QBmE
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
   while (image = images[i++]) {
-    if (image.src.includes('bird')) {
-      image.src = chrome.extension.getURL('filtered.jpg');
+    let imgSrc = String(image.src).toLowerCase();
+    let altText = String(image.alt).toLowerCase();
+
+    if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
+      replaceBirdWithFiltered(image)
     } else {
       processImage(image);
     }
   }
+}
+
+function stringContainsBird(string){
+  return string.includes('bird')
+}
+
+function replaceBirdWithFiltered(birdImage) {
+  birdImage.src = chrome.extension.getURL('filtered.jpg');
 }
 
 function processImage(img) {
