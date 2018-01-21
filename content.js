@@ -36,27 +36,33 @@ http('GET', chrome.runtime.getURL('config.json'), '', function (obj) {
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
   while (img = images[i++]) {
-    let imgSrc = String(img.src).toLowerCase();
-    let altText = String(img.alt).toLowerCase();
-
-    if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
-      replaceBirdWithFiltered(img)
-    } else {
-      // Hide image while processing
-      img.style.visibility = 'hidden';
-      processImage(img);
-    }
-    // knock out lazyloader data URLs so it doesn't overwrite filtered pics
-		if (img.hasAttribute('data-src')){
-			img.removeAttribute('data-src');
-		};
-		if (img.hasAttribute('data-hi-res-src')){
-			img.removeAttribute('data-hi-res-src');
-		};
-		if (img.hasAttribute('data-low-res-src')){
-			img.removeAttribute('data-low-res-src');
-		};
+    checkImage(img);
+    img.setAttribute('filtered', img.src);
   }
+}
+
+function checkImage(img) {
+  let imgSrc = String(img.src).toLowerCase();
+  let altText = String(img.alt).toLowerCase();
+
+  if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
+    replaceBirdWithFiltered(img)
+  } else {
+    // Hide image while processing
+    img.style.visibility = 'hidden';
+    processImage(img);
+  }
+
+  // knock out lazyloader data URLs so it doesn't overwrite filtered pics
+  if (img.hasAttribute('data-src')){
+    img.removeAttribute('data-src');
+  };
+  if (img.hasAttribute('data-hi-res-src')){
+    img.removeAttribute('data-hi-res-src');
+  };
+  if (img.hasAttribute('data-low-res-src')){
+    img.removeAttribute('data-low-res-src');
+  };
 }
 
 function stringContainsBird(string) {
@@ -120,3 +126,22 @@ function processImage(img) {
     }
   });
 }
+
+
+var target = document.body;
+config = {attributes: true, subtree: true}
+
+var makeObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation){
+        let newURL = chrome.extension.getURL('filtered.jpg');
+        if (mutation.target.tagName === 'IMG' && mutation.target.src !== newURL && !mutation.target.hasAttribute('filtered')){
+            console.log(mutation.target.src);
+            checkImage(mutation.target);
+            mutation.target.setAttribute('filtered', mutation.target.src)
+        }
+    });
+});
+
+(function(){
+    makeObserver.observe(target, config);
+})();
