@@ -43,30 +43,32 @@ function checkImages() {
 
 function checkImage(img) {
   let imgSrc = String(img.src).toLowerCase();
-  let altText = String(img.alt).toLowerCase();
+    let altText = String(img.alt).toLowerCase();
 
-  if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
-    replaceBirdWithFiltered(img)
-  } else {
-    // Hide image while processing
-    img.style.visibility = 'hidden';
-    processImage(img);
-  }
+    if (imgSrc == "" || imgSrc.slice(0,4) === 'data') {
+      continue;
+    }
 
-  // knock out lazyloader data URLs so it doesn't overwrite filtered pics
-  if (img.hasAttribute('data-src')){
-    img.removeAttribute('data-src');
-  };
-  if (img.hasAttribute('data-hi-res-src')){
-    img.removeAttribute('data-hi-res-src');
-  };
-  if (img.hasAttribute('data-low-res-src')){
-    img.removeAttribute('data-low-res-src');
-  };
+    if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
+      replaceBirdWithFiltered(img)
+    } else {
+      // Hide image while processing
+      img.style.visibility = 'hidden';
+      processImage(img);
+    }
+    // knock out lazyloader data URLs so it doesn't overwrite filtered pics
+		if (img.hasAttribute('data-src')){
+			img.removeAttribute('data-src');
+		};
+		if (img.hasAttribute('data-hi-res-src')){
+			img.removeAttribute('data-hi-res-src');
+		};
+		if (img.hasAttribute('data-low-res-src')){
+			img.removeAttribute('data-low-res-src');
+		};
 }
 
 function stringContainsBird(string) {
-  console.log("stringContainsBird");
   for (var i = 0, len = birdFeatures.length; i < len; i++) {
     if (string.toLowerCase().includes(birdFeatures[i])) {
       return true;
@@ -106,9 +108,13 @@ function processImage(img) {
   .then(res => res.json())
   .catch(error => console.error('Error. Something messed up here:', error))
   .then(response => {
+    // console.log(img);
     console.log('Success:', response);
     labels = response.responses[0].labelAnnotations;
     var isBird = false;
+    if (labels == undefined) {
+      return 0;
+    }
     for (var x = 0; x < labels.length; x++) {
       currentLabel=labels[x];
 
