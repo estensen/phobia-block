@@ -1,5 +1,16 @@
 var API_KEY = '';
 
+const birdFeatures = [
+  'bird',
+  'beak',
+  'finch',
+  'wing',
+  'lark',
+  'parrot',
+  'sparrow',
+  'water bird'
+];
+
 var http = function (method, url, body, cb) {
   var xhr = new XMLHttpRequest();
   xhr.open(method, url, true);
@@ -21,16 +32,6 @@ http('GET', chrome.runtime.getURL('config.json'), '', function (obj) {
   API_KEY = obj.key;
   document.addEventListener('DOMContentLoaded', checkImages(), false);
 });
-
-const birdFeatures = [
-  'bird',
-  'beak',
-  'finch',
-  'wing',
-  'lark',
-  'parrot',
-  'sparrow'
-];
 
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
@@ -105,7 +106,7 @@ function processImage(img) {
     for (var x = 0; x < labels.length; x++) {
       currentLabel=labels[x];
 
-      if (birdFeatures.includes(currentLabel.description) && currentLabel.score > .60) {
+      if (birdFeatures.includes(currentLabel.description) && currentLabel.score > .30) {
         // handle image replacement
         // img.src = 'http://via.placeholder.com/350x150';
         img.src = 'http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg';
