@@ -52,7 +52,7 @@ function stringContainsBird(string) {
   console.log("stringContainsBird");
   for (var i = 0, len = birdFeatures.length; i < len; i++) {
     if (string.toLowerCase().includes(birdFeatures[i])) {
-      return false;
+      return true;
     }
   }
   return false
