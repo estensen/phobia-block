@@ -11,6 +11,8 @@ function checkImages() {
     if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
       replaceBirdWithFiltered(image)
     } else {
+      // Hide image while processing
+      image.style.visibility = 'hidden';
       processImage(image);
     }
   }
@@ -46,7 +48,8 @@ function processImage(img) {
     headers: new Headers({
       'Content-Type': 'application/json'
     })
-  }).then(res => res.json())
+  })
+  .then(res => res.json())
   .catch(error => console.error('Error. Something messed up here:', error))
   .then(response => {
     console.log('Success:', response);
@@ -55,7 +58,7 @@ function processImage(img) {
     for (var x = 0; x < labels.length; x++) {
       currentLabel=labels[x];
 
-      if (birdFeatures.indexOf(currentLabel.description) > -1 && currentLabel.score > .60) {
+      if (birdFeatures.contains(currentLabel.description) && currentLabel.score > .60) {
         // handle image replacement
         // img.src = 'http://via.placeholder.com/350x150';
         img.src = 'http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg';
@@ -64,6 +67,7 @@ function processImage(img) {
       }
     }
     if (!isBird){
+      image.style.visibility = 'visible';
       console.log(labels);
     }
   });
