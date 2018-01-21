@@ -126,7 +126,7 @@ function processImage(img) {
   .catch(error => console.error('Error. Something messed up here:', error))
   .then(response => {
     // console.log(img);
-    console.log('Success:', response);
+    console.log('Success:', response, data);
     labels = response.responses[0].labelAnnotations;
     var isBird = false;
     if (labels == undefined) {
