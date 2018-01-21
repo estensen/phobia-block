@@ -36,6 +36,10 @@ http('GET', chrome.runtime.getURL('config.json'), '', function (obj) {
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
   while (img = images[i++]) {
+    if (img.src == "") {
+      continue;
+    }
+
     checkImage(img);
     img.setAttribute('filtered', img.src);
   }
@@ -44,10 +48,6 @@ function checkImages() {
 function checkImage(img) {
   let imgSrc = String(img.src).toLowerCase();
   let altText = String(img.alt).toLowerCase();
-
-  if (imgSrc == "") {
-    continue;
-  }
 
   if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
     replaceBirdWithFiltered(img)
