@@ -39,6 +39,10 @@ function checkImages() {
     let imgSrc = String(img.src).toLowerCase();
     let altText = String(img.alt).toLowerCase();
 
+    if (imgSrc == "" || imgSrc.slice(0,4) === 'data') {
+      continue;
+    }
+
     if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
       replaceBirdWithFiltered(img)
     } else {
@@ -60,7 +64,6 @@ function checkImages() {
 }
 
 function stringContainsBird(string) {
-  console.log("stringContainsBird");
   for (var i = 0, len = birdFeatures.length; i < len; i++) {
     if (string.toLowerCase().includes(birdFeatures[i])) {
       return true;
@@ -100,9 +103,13 @@ function processImage(img) {
   .then(res => res.json())
   .catch(error => console.error('Error. Something messed up here:', error))
   .then(response => {
+    // console.log(img);
     console.log('Success:', response);
     labels = response.responses[0].labelAnnotations;
     var isBird = false;
+    if (labels == undefined) {
+      return 0;
+    }
     for (var x = 0; x < labels.length; x++) {
       currentLabel=labels[x];
 
