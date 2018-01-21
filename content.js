@@ -1,19 +1,19 @@
-var images = this.document.getElementsByTagName('img');
+document.addEventListener('DOMContentLoaded', checkImages(), false);
 const birdFeatures=['beak', 'finch', 'wing', 'bird', 'lark', 'seabird','waterbird', 'water bird'];
 const url = 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAGP_QBmE-Brt-uItNnFj2T_9QRvDRKU40';
 
-for (var x=0; x < images.length; x++) {
-  currentImage = images[x];
-
-  if (currentImage.src.includes('bird')) {
-    currentImage.src = chrome.extension.getURL('filtered.jpg');
-  } else {
-    processImage(currentImage);
+function checkImages() {
+  var images = document.getElementsByTagName('img'), i = 0, img;
+  while (image = images[i++]) {
+    if (image.src.includes('bird')) {
+      image.src = chrome.extension.getURL('filtered.jpg');
+    } else {
+      processImage(image);
+    }
   }
 }
 
 function processImage(img) {
-
   var data = {
     'requests': [{
       'image': {
