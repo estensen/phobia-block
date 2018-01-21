@@ -43,29 +43,29 @@ function checkImages() {
 
 function checkImage(img) {
   let imgSrc = String(img.src).toLowerCase();
-    let altText = String(img.alt).toLowerCase();
+  let altText = String(img.alt).toLowerCase();
 
-    if (imgSrc == "") {
-      continue;
-    }
+  if (imgSrc == "") {
+    continue;
+  }
 
-    if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
-      replaceBirdWithFiltered(img)
-    } else {
-      // Hide image while processing
-      img.style.visibility = 'hidden';
-      processImage(img);
-    }
-    // knock out lazyloader data URLs so it doesn't overwrite filtered pics
-		if (img.hasAttribute('data-src')){
-			img.removeAttribute('data-src');
-		};
-		if (img.hasAttribute('data-hi-res-src')){
-			img.removeAttribute('data-hi-res-src');
-		};
-		if (img.hasAttribute('data-low-res-src')){
-			img.removeAttribute('data-low-res-src');
-		};
+  if (stringContainsBird(imgSrc) || stringContainsBird(altText)) {
+    replaceBirdWithFiltered(img)
+  } else {
+    // Hide image while processing
+    img.style.visibility = 'hidden';
+    processImage(img);
+  }
+  // knock out lazyloader data URLs so it doesn't overwrite filtered pics
+	if (img.hasAttribute('data-src')){
+		img.removeAttribute('data-src');
+	};
+	if (img.hasAttribute('data-hi-res-src')){
+		img.removeAttribute('data-hi-res-src');
+	};
+	if (img.hasAttribute('data-low-res-src')){
+		img.removeAttribute('data-low-res-src');
+	};
 }
 
 function stringContainsBird(string) {
