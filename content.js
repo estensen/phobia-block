@@ -91,7 +91,7 @@ function processImage(img) {
       }
     }
     if (!isBird){
-      image.style.visibility = 'visible';
+      img.style.visibility = 'visible';
       console.log(labels);
     }
   });
