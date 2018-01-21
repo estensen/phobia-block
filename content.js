@@ -45,7 +45,7 @@ function checkImage(img) {
   let imgSrc = String(img.src).toLowerCase();
     let altText = String(img.alt).toLowerCase();
 
-    if (imgSrc == "" || imgSrc.slice(0,4) === 'data') {
+    if (imgSrc == "") {
       continue;
     }
 
