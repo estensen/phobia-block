@@ -8,7 +8,6 @@ const birdFeatures = [
   'lark',
   'parrot',
   'sparrow',
-  'water bird'
 ];
 
 var http = function (method, url, body, cb) {
@@ -56,6 +55,11 @@ function checkImage(img) {
     img.style.visibility = 'hidden';
     processImage(img);
   }
+
+  if (img.hasAttribute('srcset')){
+    img.removeAttribute('srcset');
+  };
+
   // knock out lazyloader data URLs so it doesn't overwrite filtered pics
 	if (img.hasAttribute('data-src')){
 		img.removeAttribute('data-src');
@@ -112,6 +116,21 @@ function processImage(img) {
         }
       ]
     }
+  } else if (img.src.slice(0,17) === 'https://encrypted') {
+    data = {
+      "requests": [
+        {
+          "image": {
+              "content": getBase64Image(img)
+          },
+          "features": [
+            {
+              "type": "LABEL_DETECTION"
+            }
+          ]
+        }
+      ]
+    }
   }
 
   const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY;
@@ -148,6 +167,18 @@ function processImage(img) {
       console.log(labels);
     }
   });
+}
+
+function getBase64Image(img) {
+  var canvas = document.createElement("canvas");
+  //img.crossOrigin = 'Anonymous';
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  var dataURL = canvas.toDataURL("image/png");
+  console.log(dataURL);
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 }
 
 
