@@ -97,6 +97,23 @@ function processImage(img) {
     }]
   }
 
+  if (img.src.slice(0,4) === 'data') {
+    data = {
+      "requests": [
+        {
+          "image": {
+              "content": img.src.slice(img.src.indexOf("base64,") + 7)
+          },
+          "features": [
+            {
+              "type": "LABEL_DETECTION"
+            }
+          ]
+        }
+      ]
+    }
+  }
+
   const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY;
   fetch(url, {
     method: 'POST',
