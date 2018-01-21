@@ -19,11 +19,18 @@ var http = function (method, url, body, cb) {
 // Fetch the API key from config.json on extension startup.
 http('GET', chrome.runtime.getURL('config.json'), '', function (obj) {
   API_KEY = obj.key;
-  console.log(API_KEY);
   document.addEventListener('DOMContentLoaded', checkImages(), false);
 });
 
-const birdFeatures=['beak', 'finch', 'wing', 'bird', 'lark', 'seabird','waterbird', 'water bird'];
+const birdFeatures = [
+  'bird',
+  'beak',
+  'finch',
+  'wing',
+  'lark',
+  'parrot',
+  'sparrow'
+];
 
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
@@ -41,8 +48,14 @@ function checkImages() {
   }
 }
 
-function stringContainsBird(string){
-  return string.includes('bird')
+function stringContainsBird(string) {
+  console.log("stringContainsBird");
+  for (var i = 0, len = birdFeatures.length; i < len; i++) {
+    if (string.toLowerCase().includes(birdFeatures[i])) {
+      return false;
+    }
+  }
+  return false
 }
 
 function replaceBirdWithFiltered(birdImage) {
@@ -90,8 +103,8 @@ function processImage(img) {
         break;
       }
     }
+    img.style.visibility = 'visible';
     if (!isBird){
-      img.style.visibility = 'visible';
       console.log(labels);
     }
   });
