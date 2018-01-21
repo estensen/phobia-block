@@ -4,7 +4,11 @@
   "name": "PhobiaBlock",
   "description": "Blocks pictures that you are afraid of",
   "version": "0.0.1",
-  "web_accessible_resources": ["*.jpg","*.JPG"],
+  "web_accessible_resources": [
+    "*.jpg",
+    "*.JPG",
+    "config.json"
+  ],
 
   "browser_action": {
     "default_icon": "icon.png",

@@ -58,3 +58,4 @@ $RECYCLE.BIN/
 # Don't track environmental files
 .env
 Second-cc63798bde7f.json
+config.json

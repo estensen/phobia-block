@@ -1,6 +1,29 @@
-document.addEventListener('DOMContentLoaded', checkImages(), false);
+var API_KEY = '';
+
+var http = function (method, url, body, cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== 4) { return; }
+    if (xhr.status >= 400) {
+      notify('API request failed');
+      console.log('XHR failed', xhr.responseText);
+      return;
+    }
+    cb(JSON.parse(xhr.responseText));
+  };
+  xhr.send(body);
+};
+
+// Fetch the API key from config.json on extension startup.
+http('GET', chrome.runtime.getURL('config.json'), '', function (obj) {
+  API_KEY = obj.key;
+  console.log(API_KEY);
+  document.addEventListener('DOMContentLoaded', checkImages(), false);
+});
+
 const birdFeatures=['beak', 'finch', 'wing', 'bird', 'lark', 'seabird','waterbird', 'water bird'];
-const url = 'https://vision.googleapis.com/v1/images:annotate?key=';
 
 function checkImages() {
   var images = document.getElementsByTagName('img'), i = 0, img;
@@ -42,6 +65,7 @@ function processImage(img) {
     }]
   }
 
+  const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY;
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
