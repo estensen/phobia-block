@@ -78,11 +78,11 @@ function processImage(img) {
   .then(response => {
     console.log('Success:', response);
     labels = response.responses[0].labelAnnotations;
-    var isBird = false
+    var isBird = false;
     for (var x = 0; x < labels.length; x++) {
       currentLabel=labels[x];
 
-      if (birdFeatures.contains(currentLabel.description) && currentLabel.score > .60) {
+      if (birdFeatures.includes(currentLabel.description) && currentLabel.score > .60) {
         // handle image replacement
         // img.src = 'http://via.placeholder.com/350x150';
         img.src = 'http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg';
